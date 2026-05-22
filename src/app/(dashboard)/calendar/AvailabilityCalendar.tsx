@@ -93,7 +93,7 @@ export function AvailabilityCalendar({ properties, bookings }: Props) {
         <h1 className="text-xl font-semibold">Calendar</h1>
         <div className="flex items-center gap-2">
           {properties.length > 1 && (
-            <Select value={selectedPropertyId} onValueChange={setSelectedPropertyId}>
+            <Select value={selectedPropertyId} onValueChange={v => setSelectedPropertyId(v ?? '')}>
               <SelectTrigger className="w-48">
                 <SelectValue />
               </SelectTrigger>
