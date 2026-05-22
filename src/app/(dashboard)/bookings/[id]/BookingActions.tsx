@@ -71,7 +71,7 @@ export function BookingActions({ booking }: Props) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger>
           <Button variant="outline" size="sm" disabled={loading}>
             <MoreHorizontal className="w-4 h-4" />
           </Button>
