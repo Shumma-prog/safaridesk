@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { getMpesaToken, initiateSTKPush } from '@/lib/mpesa/daraja'
+import { initiateSTKPush } from '@/lib/mpesa/daraja'
 import { usdToTzs } from '@/lib/utils/currency'
 import { z } from 'zod'
 
@@ -31,16 +31,10 @@ export async function POST(req: NextRequest) {
     if (!booking) return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
 
     const amountTzs = Math.round(usdToTzs(amount_usd))
-    const token = await getMpesaToken()
-    const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/payments/mpesa/callback`
-
     const stkResponse = await initiateSTKPush({
-      token,
       phone,
       amount: amountTzs,
-      accountRef: booking.booking_ref,
-      description: `SafariDesk ${booking.booking_ref}`,
-      callbackUrl,
+      bookingRef: booking.booking_ref,
     })
 
     if (!stkResponse.CheckoutRequestID) {

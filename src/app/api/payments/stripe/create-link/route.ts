@@ -28,8 +28,6 @@ export async function POST(req: NextRequest) {
 
     if (!booking) return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
 
-    const guest = booking.guests as { full_name: string; email: string | null } | null
-
     // Create Stripe Payment Link
     const product = await stripe.products.create({
       name: `SafariDesk Booking ${booking.booking_ref}`,

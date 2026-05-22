@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (event.type === 'checkout.session.completed' || event.type === 'payment_intent.succeeded') {
-    const session = event.data.object as Stripe.CheckoutSession | Stripe.PaymentIntent
+    const session = event.data.object as Stripe.Checkout.Session | Stripe.PaymentIntent
     const bookingId = session.metadata?.booking_id
     if (!bookingId) return NextResponse.json({ received: true })
 

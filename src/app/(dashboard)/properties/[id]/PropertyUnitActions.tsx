@@ -15,7 +15,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import {
   Select,
@@ -94,22 +93,22 @@ export function PropertyUnitActions({ propertyId, unit, mode }: Props) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {mode === 'add'
-          ? (
-            <Button style={{ backgroundColor: '#1A5C38' }} className="text-white gap-2">
-              <Plus className="w-4 h-4" />
-              Add Unit
-            </Button>
-          )
-          : (
-            <Button variant="ghost" size="icon">
-              <Pencil className="w-3.5 h-3.5" />
-            </Button>
-          )
-        }
-      </DialogTrigger>
+    <>
+      {mode === 'add' ? (
+        <Button
+          style={{ backgroundColor: '#1A5C38' }}
+          className="text-white gap-2"
+          onClick={() => setOpen(true)}
+        >
+          <Plus className="w-4 h-4" />
+          Add Unit
+        </Button>
+      ) : (
+        <Button variant="ghost" size="icon" onClick={() => setOpen(true)}>
+          <Pencil className="w-3.5 h-3.5" />
+        </Button>
+      )}
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>{mode === 'add' ? 'Add Unit' : 'Edit Unit'}</DialogTitle>
@@ -126,7 +125,7 @@ export function PropertyUnitActions({ propertyId, unit, mode }: Props) {
               <Label>Type</Label>
               <Select
                 defaultValue={unit?.unit_type ?? 'tent'}
-                onValueChange={v => setValue('unit_type', v)}
+                onValueChange={v => setValue('unit_type', v ?? 'tent')}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />
@@ -195,5 +194,6 @@ export function PropertyUnitActions({ propertyId, unit, mode }: Props) {
         </form>
       </DialogContent>
     </Dialog>
+    </>
   )
 }
